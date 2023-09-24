@@ -1,11 +1,11 @@
-// External packages 
-const inquirer = require('inquirer');
-const fs = require('fs');
+// External packages
+import inquirer from 'inquirer';
+import fs from 'fs';
 
-// inquirer to generate qustions
+// inquirer to generate questions
 
-inquirer.prompt(
-  [
+inquirer
+  .prompt([
     {
       type: 'input',
       message: 'What the project title?',
@@ -47,55 +47,44 @@ inquirer.prompt(
       message: 'E-mail:',
       name: 'email',
     },
-  ]
-).then(({ title,
-  description,
-  installation,
-  instructions,
-  license,
-  git,
-  email,
-  usage
-}) => {
-  const template = `# ${title}
-  
-  *[Installation](#installation)
-  *[Usage](#usage)
-  *[License](#license)
-  *[Instruction](#instruction)
+  ])
+  .then(({ title, description, installation, instructions, license, git, email, usage }) => {
+    const template = `# ${title}
+
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [License](#license)
+  * [Instruction](#instruction)
 
   ## Description
-  ${description}
+ ### ${description}
 
   ## Installation
-  ${installation}
+ ### ${installation}
 
-  ## Usage 
-  ${usage}
+  ## Usage
+ ### ${usage}
 
   ## Instructions
-  ${instructions} 
+ ### ${instructions}
 
   ## License
-  ${license}
-  
-  # Questions 
-  * Github: [github](https://github.com/${git}) 
+  ### ${license}
+
+  # Questions
+  * Github: [github](https://github.com/${git})
   * E-mail: ${email}
-  `
-  // function to create new file
-  createNewFile(title, template);
+  `;
+    // function to create new file
+    createNewFile(title, template);
+  });
 
-})
-
-// creating the createNewFile function 
+// creating the createNewFile function
 function createNewFile(fileName, data) {
-  fs.writeFile(`./${fileName.toLowerCase().split(' ').join('')}.md`, data, (err) => {
+  fs.writeFile(`./${fileName.toLowerCase().split(' ')[0]}.md`, data, (err) => {
     if (err) {
-      console.log(err)
+      console.log(err);
     }
     console.log('Your README has been generated');
-  })
+  });
 }
-
-// Let's install our packages
